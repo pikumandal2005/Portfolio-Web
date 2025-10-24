@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piku Mandal - Portfolio</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+
+        :root {
+            --primary-color: #00aaff;
+            --secondary-color: #ffd700;
+            --background-color: #121212;
+            --surface-color: #1e1e1e;
+            --text-color: #ffffff;
+            --text-secondary-color: #a0a0a0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, var(--background-color), #232323);
+            color: var(--text-color);
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        /* Particle Background */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            animation: float linear infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) scale(1);
+                opacity: 0;
+            }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 0 2rem;
+        }
+
+        /* Header */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(30, 30, 30, 0.95);
+            backdrop-filter: blur(15px);
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(0, 170, 255, 0.2);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+        }
+
+        .nav-links li {
+            margin-left: 2rem;
+            position: relative;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 400;
+            transition: color 0.3s ease;
+            position: relative;
+            padding-bottom: 5px;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--primary-color);
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* Hero Section */
+        #hero {
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            text-align: center;
+        }
+
+        .hero-content {
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .profile-img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 7px solid var(--primary-color);
+            object-fit: cover;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 0 30px rgba(0, 170, 255, 0.5);
+        }
+
+        #hero h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        #hero .subtitle {
+            font-size: 1.5rem;
+            color: var(--text-secondary-color);
+            margin-bottom: 2rem;
+            font-style: italic;
+        }
+
+        .typing-effect {
+            display: inline-block;
+            border-right: 3px solid var(--primary-color);
+            animation: blink 0.7s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { border-color: transparent; }
+            51%, 100% { border-color: var(--primary-color); }
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary-color), #0088cc);
+            color: #fff;
+            padding: 1rem 2.5rem;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 170, 255, 0.5);
+        }
+
+        /* Sections */
+        section {
+            padding: 6rem 0;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 4rem;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .section-title::before {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            z-index: -1;
+            filter: blur(10px);
+            opacity: 0.5;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            border-radius: 5px;
+        }
+
+        /* About */
+        #about .about-content {
+            display: flex;
+            gap: 3rem;
+            align-items: center;
+            background: var(--surface-color);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        #about .about-text {
+            flex: 2;
+            font-size: 1.1rem;
+            line-height: 2;
+        }
+
+        #about .about-text p {
+            position: relative;
+            padding-left: 20px;
+        }
+
+        #about .about-text p::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--primary-color), var(--secondary-color));
+            border-radius: 2px;
+        }
+
+        #about .about-image {
+            flex: 1;
+            text-align: center;
+        }
+
+        .stats-container {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Skills */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1.5rem;
+            text-align: center;
+        }
+
+        .skill-item {
+            background: var(--surface-color);
+            padding: 2rem;
+            border-radius: 15px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-item::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 170, 255, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .skill-item:hover::before {
+            opacity: 1;
+        }
+
+        .skill-item:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 15px 30px rgba(0, 170, 255, 0.3);
+            border-color: var(--primary-color);
+            background: linear-gradient(135deg, var(--surface-color), rgba(0, 170, 255, 0.05));
+        }
+
+        .skill-item i {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .skill-item:hover i {
+            transform: rotateY(360deg);
+        }
+
+        .skill-item p {
+            font-weight: 500;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Projects */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: var(--surface-color);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid transparent;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .project-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .project-card:hover::after {
+            transform: scaleX(1);
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 50px rgba(0, 170, 255, 0.4);
+            border-color: var(--primary-color);
+        }
+
+        .project-card-content {
+            padding: 2rem;
+            flex-grow: 1;
+        }
+
+        .project-card h3 {
+            font-size: 1.7rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .project-card p {
+            font-size: 1rem;
+            color: var(--text-secondary-color);
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .project-card .tags {
+            margin-bottom: 1.5rem;
+        }
+
+        .project-card .tag {
+            display: inline-block;
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: var(--text-color);
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            border: 1px solid rgba(0, 170, 255, 0.3);
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
+
+        .project-card .tag:hover {
+            transform: scale(1.1);
+            background: linear-gradient(135deg, var(--primary-color), #0088cc);
+        }
+
+        .project-card a {
+            display: block;
+            background: linear-gradient(135deg, var(--primary-color), #0088cc);
+            color: #fff;
+            padding: 1rem;
+            text-decoration: none;
+            text-align: center;
+            font-weight: 700;
+            transition: background 0.3s ease, letter-spacing 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card a::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.5s ease, height 0.5s ease;
+        }
+
+        .project-card a:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .project-card a:hover {
+            background: linear-gradient(135deg, #0088cc, var(--primary-color));
+            letter-spacing: 1px;
+        }
+
+        .project-card a span {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Contact */
+        #contact .contact-content {
+            text-align: center;
+            max-width: 700px;
+            margin: auto;
+            background: var(--surface-color);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        #contact p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .social-links-contact {
+            margin-top: 2rem;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .social-links-contact a {
+            color: var(--text-color);
+            font-size: 2.5rem;
+            transition: color 0.3s ease, transform 0.3s ease;
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(0, 170, 255, 0.1);
+            border: 2px solid transparent;
+        }
+
+        .social-links-contact a:hover {
+            color: var(--primary-color);
+            transform: translateY(-5px) rotate(360deg);
+            border-color: var(--primary-color);
+            background: rgba(0, 170, 255, 0.2);
+            box-shadow: 0 5px 20px rgba(0, 170, 255, 0.4);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 4rem;
+            background: var(--surface-color);
+            border-top: 1px solid rgba(0, 170, 255, 0.2);
+        }
+
+        footer p {
+            font-size: 0.95rem;
+            color: var(--text-secondary-color);
+        }
+
+        /* Scroll to Top Button */
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary-color), #0088cc);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            z-index: 999;
+            box-shadow: 0 5px 15px rgba(0, 170, 255, 0.4);
+        }
+
+        .scroll-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 170, 255, 0.6);
+        }
+
+        .scroll-top.show {
+            display: flex;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            #hero h1 { font-size: 2.5rem; }
+            #hero .subtitle { font-size: 1.2rem; }
+            
+            .menu-toggle { display: flex; }
+            
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: rgba(30, 30, 30, 0.98);
+                flex-direction: column;
+                padding: 2rem 0;
+                display: none;
+                box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links li {
+                margin: 1rem 0;
+                text-align: center;
+            }
+
+            #about .about-content {
+                flex-direction: column;
+                padding: 2rem;
+            }
+
+            .stats-container {
+                flex-direction: column;
+                gap: 2rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 2.5rem;
+            }
+
+            .social-links-contact {
+                flex-wrap: wrap;
+            }
+        }
+
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Particle Background -->
+    <div class="particles" id="particles"></div>
+
+    <header>
+        <nav class="container">
+            <div class="logo">P.M.</div>
+            <div class="menu-toggle" id="mobile-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="hero">
+            <div class="container hero-content">
+                <img src="piku.jpg" alt="Piku Mandal" class="profile-img">
+                <h1>Piku Mandal</h1>
+                <p class="subtitle">"<span class="typing-effect">Turning smart ideas into smarter realities!</span>"</p>
+                <a href="#projects" class="cta-button">View My Work</a>
+            </div>
+        </section>
+
+        <section id="about">
+            <div class="container">
+                <h2 class="section-title">About Me</h2>
+                <div class="about-content">
+                    <div class="about-text">
+                        <p>
+                            Hello! I'm Piku, a dedicated and enthusiastic developer with a passion for building innovative and impactful applications. My journey in technology is driven by a desire to solve real-world problems and create seamless user experiences. I thrive on challenges and am constantly exploring new technologies to broaden my skillset. When I'm not coding, I enjoy exploring new places and staying up-to-date with the latest tech trends.
+                        </p>
+                        <div class="stats-container">
+                            <div class="stat-item">
+                                <span class="stat-number" data-target="10">0</span>
+                                <span class="stat-label">Projects</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number" data-target="8">0</span>
+                                <span class="stat-label">Technologies</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number" data-target="11">0</span>
+                                <span class="stat-label">Repositories</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills">
+            <div class="container">
+                <h2 class="section-title" data-text="My Skills">My Skills</h2>
+                <div class="skills-grid">
+                    <div class="skill-item"><i class="fab fa-html5"></i><p>HTML5</p></div>
+                    <div class="skill-item"><i class="fab fa-css3-alt"></i><p>CSS3</p></div>
+                    <div class="skill-item"><i class="fab fa-js-square"></i><p>JavaScript</p></div>
+                    <div class="skill-item"><i class="fab fa-python"></i><p>Python</p></div>
+                    <div class="skill-item"><i class="fab fa-node-js"></i><p>Node.js</p></div>
+                    <div class="skill-item"><i class="fab fa-react"></i><p>React</p></div>
+                    <div class="skill-item"><i class="fas fa-microchip"></i><p>Arduino</p></div>
+                    <div class="skill-item"><i class="fab fa-git-alt"></i><p>Git</p></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects">
+            <div class="container">
+                <h2 class="section-title" data-text="My Projects">My Projects</h2>
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <div class="project-card-content">
+                            <h3>MAKAUT CA4 Practice Portal</h3>
+                            <p>An interactive React-based MCQ platform designed to help students master Numerical Methods. Features instant feedback, score tracking, and a modern UI for an engaging learning experience.</p>
+                            <div class="tags"><span class="tag">React</span><span class="tag">JavaScript</span><span class="tag">Education</span></div>
+                        </div>
+                        <a href="https://github.com/pikumandal2005/makaut-ca4-practice-portal" target="_blank"><span>View on GitHub</span></a>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-card-content">
+                            <h3>Smart Tour Prototype</h3>
+                            <p>A full-stack smart tourism platform with AI-powered services, admin dashboard, and web interface. Provides intelligent tour recommendations and comprehensive tourist management features.</p>
+                            <div class="tags"><span class="tag">JavaScript</span><span class="tag">Python</span><span class="tag">AI</span><span class="tag">Full-Stack</span></div>
+                        </div>
+                        <a href="https://github.com/pikumandal2005/smart-tour-prototype" target="_blank"><span>View on GitHub</span></a>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-card-content">
+                            <h3>Home Automation System</h3>
+                            <p>A complete IoT-based home automation solution with web and Android app interfaces. Control your home appliances remotely with an intuitive, user-friendly interface.</p>
+                            <div class="tags"><span class="tag">HTML</span><span class="tag">IoT</span><span class="tag">Android</span></div>
+                        </div>
+                        <a href="https://github.com/pikumandal2005/Home-automation" target="_blank"><span>View on GitHub</span></a>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-card-content">
+                            <h3>Arduino Automatic Irrigation</h3>
+                            <p>A smart, Arduino-based system that automatically waters plants when the soil is dry, ensuring optimal plant health with minimal intervention. Perfect for sustainable agriculture.</p>
+                            <div class="tags"><span class="tag">C++</span><span class="tag">Arduino</span><span class="tag">IoT</span></div>
+                        </div>
+                        <a href="https://github.com/pikumandal2005/arduino-automatic-irrigation-system" target="_blank"><span>View on GitHub</span></a>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-card-content">
+                            <h3>Bus Real-time Tracking v2.0</h3>
+                            <p>Enhanced version of the real-time bus tracking system with improved performance and features. Provides live location tracking and estimated arrival times for better commute planning.</p>
+                            <div class="tags"><span class="tag">JavaScript</span><span class="tag">Real-time</span><span class="tag">WebSocket</span></div>
+                        </div>
+                        <a href="https://github.com/pikumandal2005/bus-realtim-V-2.O" target="_blank"><span>View on GitHub</span></a>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-card-content">
+                            <h3>Bus Real-time Tracking v1.0</h3>
+                            <p>The initial version of the real-time bus tracking system featuring GPS-based location tracking and a web interface for monitoring bus positions in real-time.</p>
+                            <div class="tags"><span class="tag">HTML</span><span class="tag">JavaScript</span><span class="tag">Node.js</span></div>
+                        </div>
+                        <a href="https://github.com/pikumandal2005/bus-realtime" target="_blank"><span>View on GitHub</span></a>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-card-content">
+                            <h3>Smart Tourist TB</h3>
+                            <p>A comprehensive web application designed to enhance the tourist experience with features like location discovery, travel planning, and personalized recommendations.</p>
+                            <div class="tags"><span class="tag">JavaScript</span><span class="tag">HTML</span><span class="tag">CSS</span></div>
+                        </div>
+                        <a href="https://github.com/pikumandal2005/Smart-Tourist-TB" target="_blank"><span>View on GitHub</span></a>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-card-content">
+                            <h3>Smart Tourist TB Server</h3>
+                            <p>The backend powerhouse for Smart Tourist TB, handling API requests, database operations, and business logic to deliver seamless tourist services.</p>
+                            <div class="tags"><span class="tag">JavaScript</span><span class="tag">Node.js</span><span class="tag">Express</span></div>
+                        </div>
+                        <a href="https://github.com/pikumandal2005/Smart-Tourist-TB-Server" target="_blank"><span>View on GitHub</span></a>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-card-content">
+                            <h3>Smart Tourist Safety System</h3>
+                            <p>A comprehensive safety monitoring and incident response system designed to keep tourists secure. Features real-time alerts, emergency response coordination, and safety analytics.</p>
+                            <div class="tags"><span class="tag">Safety</span><span class="tag">IoT</span><span class="tag">Monitoring</span></div>
+                        </div>
+                        <a href="https://github.com/pikumandal2005/Smart-Tourist-Safety-Monitoring-Incident-Response-System" target="_blank"><span>View on GitHub</span></a>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-card-content">
+                            <h3>Python Smart Fan Controller</h3>
+                            <p>An intelligent temperature-based fan control system using Python. Automatically adjusts fan speed based on ambient temperature, optimizing comfort and energy efficiency.</p>
+                            <div class="tags"><span class="tag">Python</span><span class="tag">Automation</span><span class="tag">IoT</span></div>
+                        </div>
+                        <a href="https://github.com/pikumandal2005/Python-Based-Smart-Fan-Controlling-System" target="_blank"><span>View on GitHub</span></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact">
+            <div class="container contact-content">
+                <h2 class="section-title" data-text="Get In Touch">Get In Touch</h2>
+                <p>I'm always open to discussing new projects, creative ideas, or opportunities to be part of an amazing team. Feel free to reach out to me!</p>
+                <a href="mailto:pikumandal5233@gmail.com" class="cta-button">Say Hello</a>
+                <div class="social-links-contact">
+                    <a href="https://github.com/pikumandal2005" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/piku-mandal-3161b9371" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://www.instagram.com/its_piku_mandal" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Piku Mandal. Crafted with <i class="fas fa-heart" style="color:red;"></i></p>
+        </div>
+    </footer>
+
+    <button class="scroll-top" id="scrollTop">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // Create floating particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 50;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                particle.style.animationDelay = Math.random() * 5 + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        createParticles();
+
+        // Intersection Observer for section animations
+        const sections = document.querySelectorAll('section');
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+
+        // Mobile menu toggle
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navLinks = document.getElementById('nav-links');
+
+        mobileMenu.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Scroll to top button
+        const scrollTopBtn = document.getElementById('scrollTop');
+
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollTopBtn.classList.add('show');
+            } else {
+                scrollTopBtn.classList.remove('show');
+            }
+        });
+
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Animated counter for stats
+        const animateCounter = (element) => {
+            const target = parseInt(element.getAttribute('data-target'));
+            const duration = 2000; // 2 seconds
+            const increment = target / (duration / 16); // 60fps
+            let current = 0;
+
+            const updateCounter = () => {
+                current += increment;
+                if (current < target) {
+                    element.textContent = Math.floor(current);
+                    requestAnimationFrame(updateCounter);
+                } else {
+                    element.textContent = target + '+';
+                }
+            };
+
+            updateCounter();
+        };
+
+        // Trigger counter animation when about section is visible
+        const aboutSection = document.getElementById('about');
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    document.querySelectorAll('.stat-number').forEach(stat => {
+                        if (stat.textContent === '0') {
+                            animateCounter(stat);
+                        }
+                    });
+                    statsObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        if (aboutSection) {
+            statsObserver.observe(aboutSection);
+        }
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
